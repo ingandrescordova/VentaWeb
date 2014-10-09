@@ -1,0 +1,26 @@
+<div class="row">
+	<div class="span9"> 
+	    <div id="Contenido"></div>
+    </div>
+</div>
+<div class="span1"></div>
+<script>
+	/*--Muestra La Vista Principal De Empresa--*/
+	function frmEntrada() {
+		jQuery.ajax({
+        	url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/frmTipoEntrada',
+        	dateType: 'html',
+        	beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+        	success: function(datos) {
+            	jQuery('#Contenido').html(datos);
+        	}
+    	});
+ 	}
+</script>
+ 
+<script>
+	/*--Muestra La Vista De Listado De Proveedores--*/
+	frmEntrada(); 
+</script> 

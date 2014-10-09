@@ -1,0 +1,181 @@
+<header id="nav-bar" >
+	<div id="header-container">
+		<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/frmEntradas"></a>
+ 	    <h5>INVENTARIO <span class=" icon-arrow-right-2"></span></h5>
+        <h2>Movimiento Devolución</h2>
+	</div>
+</header>
+<div class="space"></div>
+<div class="space"></div>
+<br />
+<div class="row-fluid">
+	<div class="span10 offset1">
+		<div class="tab-content">
+			<form class="form-horizontal" id="Form" name="Form" role="form" method="POST"> 
+				<div class="row-fluid">
+					<input  type="hidden" id="Tipo_Movimiento" name="Tipo_Movimiento" value="{{TipoMovimiento}}"/>
+					<input  type="hidden" id="Movimiento" name="Movimiento" value="{{Entrada}}"/>
+					<ul class="nav nav-tabs">
+	    				<li class="active"><a href="#tab1" data-toggle="tab"><span class="icon-signup"></span > Información Basica</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab1">
+							<fieldset>
+						      <legend class="text-info"><h4 style="padding-left: 25px;">Datos Movimiento Proveedor</h4></legend>
+							</fieldset>
+							<div class="control-group">
+								<label class="control-label" >Producto</label>
+					           <div class="controls">
+						         <input type="hidden" id="Producto_Inventario" name="Producto_Inventario" />
+						         <input type="text"  class="input-large" id="Producto" name="Producto" placeholder="Producto" readonly=""/>
+						         <button data-toggle="modal" onclick="javascript: ModalCodigoProducto()" class="btn btn-small btn-primary"><span class="icon-search"></span> Buscar...</button>
+					           </div>
+							</div>
+						<div class="control-group">
+							<label class="control-label">Cantidad</label>
+							<div class="controls">
+								<input type="text"  class="input-large"  id="Cantidad" name="Cantidad" placeholder="Cantidad"/>
+			    			</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">Fecha</label>
+							<div class="controls">
+								<input type="text"  class="input-large"  id="Fecha" name="Fecha" placeholder="Fecha" value="{{Fecha}}" readonly=""/>
+			    			</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">Número de Ticket</label>
+							<div class="controls">
+								<input type="text"  class="input-large"  id="Numero_Ticket" name="Numero_Ticket" placeholder="Numero de Ticket"/>
+			    			</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">Observaciones</label>
+							<div class="controls">
+								<textarea class="input-large"  id="Observaciones" name="Observaciones"></textarea>
+			    			</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">Usuario</label>
+							<div class="controls">
+								<input type="text"  class="input-large"  id="Usuario" name="Usuario" placeholder="Usuario"/>
+			    			</div>
+						</div>
+						</div>
+					</div>
+					
+				</div>
+				<br />
+				<input  type="hidden" id="Validar" name="Validar"  value="{{Validar}}"/>
+				<div class="control-group">
+					<div class="controls">
+                		<button type="submit" class="btn"><span class="icon-disk-2"></span>&nbsp;Guardar</button>
+                		&nbsp;&nbsp;
+						<button class="btn btn-inverse" onclick="javascript: frmListadoProducto()" class="btn"><span class="icon-close"></span>&nbsp;Cancelar</button>	   
+    				</div>
+				</div>
+				<div id="alerts-container"></div>
+ 
+				<div id="toast-example1" class="toast toasttext02 fade">
+				   <button type="button" class="close" data-dismiss="alert"></button>
+				   <div class="toast-body">
+				      <h4 class="toast-heading">ERRROR</h4>
+				      <p>Faltan campos (*) requeridos para realizar el proceso de captura.</p>
+				   </div>
+				</div>
+ 
+				<br /><br /><br /> 
+			</form> 
+		</div>
+	</div>
+</div> 
+	<footer class="win-ui-light win-commandlayout navbar-fixed-bottom">  
+	</footer>
+<div id="MBuscarProducto" class="modal hide fade" hidden="true">
+	<div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    	<h3>Buscar Producto</h3>
+  	</div>
+  	<div class="modal-body">
+    	<form class="form-horizontal" id="FormModal" name="FormModal" method="POST">
+    		<div class="control-group">
+				<label class="control-label">Introduzca el código</label>
+                <div class="controls">
+					<input type="text" class="input-large" id="NombreProducto" name="NombreProducto" placeholder="Nombre producto" />
+            	</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+            		<button class="btn btn-info" type="button" onclick="javascript: fnCodigoConsultar()"><span class="icon-search"></span > Buscar</button>   
+    			</div>
+			</div>
+			<div id="ContenidoModal" class="text-info"></div>
+    	</form>
+    	<br />
+  	</div>
+</div>
+	  
+{{Script|raw}} 
+<script>
+	function ModalCodigoProducto() {
+		jQuery('#MBuscarProducto').modal('show');
+	}
+</script>
+<script>
+	function fnCodigoConsultar() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/CodigoConsultar',
+			data: jQuery('#FormModal').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+				jQuery('#ContenidoModal').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');	
+			},
+			success: function(data) {
+				jQuery("#ContenidoModal").html(data);
+			}
+		});
+	}
+</script>
+<script>
+/*--Función Que Manda Al Metodo Para GuardarProducto--*/
+	function fnGuardarDevolucion() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/GuardarDevolucion',
+			data: jQuery('#Form').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+			success: function(data) {
+				jQuery('#Contenido').html(data);	
+			}   
+		});
+	}
+</script>
+<script>
+/*--Función Que Se Realiza Con El Evento Submit Y Llama A La Funcion GuardarProducto Y frmListadoProductos--*/
+	jQuery(document).ready(function(){
+		jQuery("Form").keypress(function(e) {
+	       	if (e.which == 13) {
+	           return false;
+	       	}
+   		});
+		jQuery('#Cantidad').focus();		
+		jQuery('#Form').on('submit', function(e){
+			var isvalidate = jQuery('#Form').valid();
+			if (isvalidate) {
+				e.preventDefault();
+				fnGuardarDevolucion();
+			}
+			else {
+				var $toast = $('#toast-example1').clone();
+				jQuery('#alerts-container').append($toast.addClass('in'));
+			}					
+		});
+		$('#show-toast-button').click(function(e){
+		   e.preventDefault();
+		   var $toast = $( $(this).attr('href')).clone();
+		   $('#alerts-container').append($toast.addClass('in'));
+		});
+	});
+</script>

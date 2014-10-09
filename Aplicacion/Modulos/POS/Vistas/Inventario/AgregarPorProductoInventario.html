@@ -1,0 +1,158 @@
+<header id="nav-bar" >
+	<div id="header-container">
+		<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario"></a>
+        	<h5>INVENTARIO<span class=" icon-arrow-right-2"></span></h5>
+            <h2>Agregar producto a inventario</h2> 
+	</div>
+</header>
+<div class="space"></div>
+<div class="space"></div>
+<br />
+<div class="row-fluid">
+	<div class="span10 offset1">
+		<div class="tab-content">
+			<form class="form-horizontal" id="Form" name="Form" role="form" method="POST"> 
+			<input  id="Id_Producto" name="Id_Producto"type="hidden"/>
+				<div class="row-fluid">
+        				<ul class="nav nav-tabs">
+            				<li class="active"><a href="#tab1" data-toggle="tab"><span class="icon-signup"></span > Información Basica</a></li>
+        				</ul>
+    					<div class="tab-content">
+        					<div class="tab-pane active" id="tab1">
+								<fieldset>
+	        						<legend class="text-info"><h4 style="padding-left: 25px;">PRODUCTO</h4></legend>
+								</fieldset>
+								<div class="control-group">
+									<label class="control-label" >Codigo</label>
+	                				<div class="controls">
+	                					<input type="text"  class="input-large" id="CodigoInventario" name="CodigoInventario" placeholder="Codigo Producto" readonly=""/>
+	                					<button data-toggle="modal" onclick="javascript: CodigoModalInventario()" class="btn btn-small btn-primary"><span class="icon-search"></span> Buscar...</button>
+	                				</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Nombre Del Producto</label>
+                					<div class="controls">
+					                	<input type="text" class="input-large" id="NombreProductoInventario" name="NombreProductoInventario" placeholder="Descripción" readonly=""/>
+                					</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Cantidad</label>
+                					<div class="controls">
+					                	<input type="text" class="input-small" id="Cantidad" name="Cantidad" placeholder="Cantidad"/>
+                					</div>
+								</div>
+							</div>
+    					</div>
+					
+				</div>
+				<br />
+				<input  type="hidden" id="Validar" name="Validar"  value="{{Validar}}"/>
+				<div class="control-group">
+					<div class="controls">
+                		<button type="submit" class="btn"><span class="icon-disk-2"></span > Agregar</button>
+                		&nbsp;&nbsp;
+						<button class="btn btn-inverse" onclick="javascript: frmInicializacionInventario()" class="btn"><span class=" icon-close"></span > Cancelar</button>   
+    			</div>
+    			<br /><br /><br />
+			</div> 
+			<div id="alerts-container"></div>
+ 
+				<div id="toast-example1" class="toast toasttext02 fade">
+				   <button type="button" class="close" data-dismiss="alert"></button>
+				   <div class="toast-body">
+				      <h4 class="toast-heading">ERRROR</h4>
+				      <p>Faltan campos (*) requeridos para realizar el proceso de captura.</p>
+				   </div>
+	   			</div>
+			</form> 
+		</div>
+	</div>
+</div> 
+	<footer class="win-ui-light win-commandlayout navbar-fixed-bottom">  
+	</footer>
+<div id="ModalCodigo" class="modal hide fade" hidden="true">
+	<div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    	<h3>Buscar Producto</h3>
+  	</div>
+  	<div class="modal-body">
+    	<form class="form-horizontal" id="FormModalInventario" name="FormModalInventario" method="POST">
+    		<div class="control-group">
+				<label class="control-label">Introduzca el código</label>
+                <div class="controls">
+					<input type="text" class="input-large" id="CodigoMInventario" name="CodigoMInventario" placeholder="Código del producto" />
+            	</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+            		<button class="btn btn-info" type="button" onclick="javascript: fnConsultarCodigoInventario()"><span class="icon-search"></span > Buscar</button>   
+    			</div>
+			</div>
+			<div id="ContenidoModalInventario" class="text-info"></div>
+    	</form>
+    	<br />
+  	</div>
+</div> 
+{{Script|raw}}
+<script>
+	function CodigoModalInventario() {
+		jQuery('#ModalCodigo').modal('show');
+	}
+</script>
+<script>
+ 
+ 	/* Consultar El Codigo */
+ 	function fnConsultarCodigoInventario() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/ConsultarCodigoInventario',
+			data: jQuery('#FormModalInventario').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+				jQuery('#ContenidoModalInventario').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');	
+			},
+			success: function(data) {
+				jQuery("#ContenidoModalInventario").html(data);
+			}	
+		});
+ 	}
+ 	
+</script>
+<script>
+	
+	/*--Función Que Manda Al Metodo Para GuardarProducto--*/
+	function fnGuardarInventario() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/GuardarInventarioProducto',
+			data: jQuery('#Form').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+			success: function(data) {
+				jQuery('#Contenido').html(data);			
+			}   
+		});
+	}
+	
+</script>
+<script>
+	jQuery(document).ready(function() {
+		jQuery("Form").keypress(function(e) {
+	       	if (e.which == 13) {
+	           return false;
+	       	}
+   		});
+		jQuery('#Cantidad').focus();
+		jQuery('#Form').on('submit', function(e) {
+			var isvalidate = jQuery('#Form').valid();
+			if (isvalidate) {
+  				e.preventDefault();
+				fnGuardarInventario();
+			}
+			else {
+				var $toast = $('#toast-example1').clone();
+				jQuery('#alerts-container').append($toast.addClass('in'));
+			}
+		});
+	});
+</script>

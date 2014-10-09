@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   <meta name="viewport" content="width=device-width" />
+{{Script|raw}}
+   <title>Ventas Online</title>
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css' />
+
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}bootmetro.css" />
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}bootmetro-responsive.css" />
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}bootmetro-icons.css" />
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}bootmetro-ui-light.css" />
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}datepicker.css" />
+   
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}docs.css" />
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}prettify.css" />
+   <script type="text/javascript" src="{{NeuralRutasApp.RutaJs}}jquery-2.0.3.js"></script>
+   <script  type="text/javascript" src="{{NeuralRutasApp.RutaJs}}jquery-2.0.3.min.js"></script>    
+   <script type="text/javascript" src="{{NeuralRutasApp.RutaJs}}min/bootstrap.min.js"></script>
+   <style>
+   .error {
+  		font-size: 10px;
+   		color: #b41a0c;
+   }
+   #alerts-container {
+	   position: fixed;
+	   top: 47px;
+	   right: 5px;
+	   padding: 0;
+	   z-index: 1100;
+	}
+	#alerts-container .toast {
+	   /* add a shadow */
+	   -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	      box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	}
+	.navbar.metro-navbar .navbar-inner {
+		-webkit-box-shadow: 0 0 9px rgba(0, 0, 0, 0.3);
+	      box-shadow: 0 0 9px rgba(0, 0, 0, 0.3);
+	      background: #0fa5d1;
+	      color: white;
+	}
+	.win-command .win-commandring {
+      border-color: white;
+   }
+	.white {
+		color: white;
+	}
+   </style>
+</head>
+
+<body class="bs-docs-docs" data-spy="scroll" data-target=".bs-docs-sidebar">
+   
+   <div class="navbar metro-navbar navbar-fixed-top">
+      <div class="navbar-inner">
+         <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+            </button>
+            <h1 class="brand"><a href="" style="color:  white;">VENTAS ONLINE</a><small style="color:  white;">SISTEMA</small></h1>
+            <div class="nav-collapse collapse">
+               <ul class="nav">
+                  <li class="active">
+                     <a href="{{NeuralRutasApp.RutaURLBase}}Administrador"><span class="icon-home-3"></span> Principal</a>
+                  </li>
+               </ul>
+			   <div id="top-info" class="pull-right" style="padding-top: 5px;">
+	            <a id="logged-user" href="{{NeuralRutasApp.RutaURLBase}}Administrador/Perfil" class="win-command pull-right">
+	               <span class="win-commandicon win-commandring icon-user" style="color:  white;"></span>
+	            </a>
+            <div class="pull-left">
+               <h3>{{Nombre}}</h3>
+               <h5>{{Perfil}}</h5>
+            </div>
+         </div>
+
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div id="doc-container" class="container">
+      <div class="row">
+    {% block Menu %}
+        {% include 'General/Menu/MenuAdministrador.html' %}
+    {% endblock Menu %}
+
+         <div class="bs-docs-container span9">
+     {% block Contenido %}
+     {% include 'General/Principal.html' %}
+     {% endblock Contenido %}
+         </div>
+      </div>
+   </div>
+</body>
+</html>
+
+<script>
+	function ModificacionPerfil() {
+		jQuery.ajax({
+				url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Perfil/ModificacionPerfil',
+			//	data: '',
+			//	type: 'POST',
+				beforeSend: function() {
+	        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+	        	},
+				success: function(data) {
+					jQuery('#Contenido').html(data);			
+				}   
+			});
+	}
+</script>

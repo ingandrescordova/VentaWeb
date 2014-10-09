@@ -1,0 +1,40 @@
+<header id="nav-bar" >
+	<div id="header-container">
+	    <a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/Proveedores"></a>
+		<h5>PROVEEDORES <span class=" icon-arrow-right-2"></span></h5>
+	    <h2>Eliminar Registro</h2>
+ 	</div>
+</header>
+<div class="alert alert-block" id="Eliminar">
+	<h3>Advertencia!</h3>
+  	¿Desea eliminar el registro de la base de datos?
+  	<br /><br /><br />
+	<div class="control-group">
+		<div class="controls">
+			<button class="btn btn-danger" onclick="javascript: fnEliminar('{{Id}}')"><span class="icon-trashcan"> Aceptar</span ></button>              
+			<button class="btn btn-inverse" onclick="javascript: frmListadoProveedores()"><span class="icon-delete"> Cancelar</span ></button>
+		</div>
+	</div>
+</div>
+<script>
+	/*--Eliminar Proveedor  De Acuerdo Al Id --*/
+	function fnEliminar(Id) {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Proveedores/EliminarProveedor/' + Id,
+           	dataType: 'html',
+           	success: function() {
+           		jQuery('#Alerta').show();
+		   		frmListadoProveedores();
+           	} 
+        });
+ 	}
+</script>
+<script>
+	jQuery(document).ready(function() {
+		jQuery("#Eliminar").keypress(function(e) {
+	 		if (e.which == 13) {
+           		return false;
+       		}
+   		});
+	});
+</script>

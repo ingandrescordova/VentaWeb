@@ -1,0 +1,62 @@
+<header id="nav-bar" >
+	<div id="header-container">
+    	<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario"></a>
+        <h5>INVENTARIO</h5>
+        <h2>Importar</h2>    
+	</div>
+</header>
+<br />
+<div class="row-fluid">
+	<div class="span10 offset1">
+		<table class="table table-condensed table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Codigo</th>
+					<th>Nombre del Producto</th>
+					<th>Existencia</th>
+					<th></th>
+				</tr>
+		    </thead>
+		    <tbody>
+		    <form id="Resultado" name="Resultado" method="POST">
+				{% set Contador = 0 %}
+				{% for Dato in Consulta %}
+				{% set Contador = Contador + 1 %}
+				<tr class="center">
+					<td>{{Contador}}</td>
+					<td>{{Dato.Codigo}}</td>
+					<td>{{Dato.NombreProducto}}</td>
+					<td>{{Dato.Existencia}}</td>
+				</tr>
+				{% endfor %}
+				<input type="hidden" name="Arreglo" id="Arreglo" value="{{Arreglo}}" />
+				<input type="hidden" name="Validar" id="Validar" value="{{Validar}}" />
+			</form>
+		    </tbody>
+		</table>
+		<div class="control-group">
+			<div class="controls">
+				<button class="btn btn-info" id="Confirmar"><span class="icon-plus"></span > Comfirmar</button>
+		    	&nbsp;&nbsp;
+				<button class="btn btn-inverse" onclick="javascript: frmInicializacionInventario();" id="CancelarCodigo" class="btn"><span class=" icon-close"></span > Cancelar</button>   
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	jQuery('#Confirmar').on('click', function() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/GuardarDatosImportar',
+			data: jQuery('#Resultado').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+				jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');	
+			},
+			success: function(data) {
+				jQuery('#Contenido').html(data);
+				//frmInicializacionInventario();
+			}	
+		});
+	});
+</script>

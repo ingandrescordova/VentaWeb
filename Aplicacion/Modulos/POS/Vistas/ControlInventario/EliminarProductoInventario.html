@@ -1,0 +1,40 @@
+<header id="nav-bar" >
+	<div id="header-container">
+		<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/ControlInventario"></a>
+        	<h5>CONTROL DE INVENTARIO <span class=" icon-arrow-right-2"></span></h5>
+            <h2>Eliminar </h2>
+	</div>
+</header>
+<div class="alert alert-block" id="Eliminar">
+	<h3>Advertencia!</h3>¿Desea eliminar el registro de la base de datos?
+	<br />
+	<br />
+	<br />
+	<div class="control-group">
+		<div class="controls">
+			<button class="btn btn-danger" onclick="javascript: fnEliminarProductoInventario('{{Id}}')"><span class="icon-trashcan"> Aceptar</span ></button>              
+			<button class="btn btn-inverse" onclick="javascript: frmListadoInventario()"><span class="icon-delete"> Cancelar</span ></button>
+		</div>
+	</div>
+</div>
+<script>
+/*--Función Que Manda A Al Metodo EliminarProductoStatus--*/
+ function fnEliminarProductoInventario(Id) {
+ 	jQuery.ajax({ 
+ 		url: '{{NeuralRutasApp.RutaURLBase}}Administrador/ControlInventario/EliminarProducto/' + Id,
+ 		dataType: 'html',
+ 		success: function(data) {
+ 			frmListadoInventario();
+ 		}
+ 	});
+ }
+</script>
+<script>
+	jQuery(document).ready(function() {
+		jQuery("#Eliminar").keypress(function(e) {
+	 		if (e.which == 13) {
+           		return false;
+       		}
+   		});
+	});
+</script>

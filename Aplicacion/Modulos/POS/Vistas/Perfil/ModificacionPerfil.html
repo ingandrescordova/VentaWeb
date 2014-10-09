@@ -1,0 +1,226 @@
+<header id="nav-bar" >
+    <div id="header-container">
+        <a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador"></a>
+        <h5>PERFIL<span class=" icon-arrow-right-2"></span></h5>
+        <h2>Modificacion de Perfil</h2>
+    </div>
+</header>
+<div class="row-fluid">
+<div class="alert alert-block">
+	<button type="button" class="close" data-dismiss="alert"></button>
+  	<h4>Precaución!</h4>
+  	Este registro puede ser modificado.
+</div>
+<div class="span10 offset1">
+<form class="form-horizontal" id="Form" name="Form" role="form" method="POST"> 
+<div class="row-fluid">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab"><span class="icon-user-3"></span > Información Básica</a></li>
+            <li><a href="#tab2" data-toggle="tab"><span class="icon-cog-2"></span > Configuración</a></li>
+        </ul>
+    
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+	        <fieldset>
+	        	<legend class="text-info"><h4 style="padding-left: 25px;">DATOS GENERALES</h4></legend>
+			</fieldset>
+		<br />	
+			{% for Dato in Consulta %}
+			<input  type="hidden" id="Id" name="Id"  value="{{Dato.Id|Encriptacion}}"/>
+			<div class="control-group">
+				<label class="control-label">Nombre</label>
+                <div class="controls">
+               	 <input type="text"  class="input-xlarge" id="Nombre" name="Nombre" placeholder="Nombre" value="{{Dato.Nombre}}"/><br /><br />
+               	 <input type="text"  class="input-xlarge" id="ApellidoPaterno" name="ApellidoPaterno" placeholder="Apellido Paterno" value="{{Dato.ApellidoPaterno}}"/><br /><br />
+               	 <input type="text"  class="input-xlarge" id="ApellidoMaterno" name="ApellidoMaterno" placeholder="Apellido Materno" value="{{Dato.ApellidoMaterno}}"/>
+                </div>
+			</div>
+			<fieldset>
+	        	<legend class="text-info"><h4 style="padding-left: 25px;">CONTACTO</h4></legend>
+			</fieldset>
+			<div class="control-group">
+				<label class="control-label">Correo</label>
+                <div class="controls">
+                	<input type="email" class="input-large" id="Correo" name="Correo" placeholder="Correo Electrónico" value="{{Dato.Correo}}"/>
+                </div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Teléfono Principal</label>
+                <div class="controls">
+                	<input type="text" class="input-large" id="Telefono_Principal" name="Telefono_Principal" value="{{Dato.Telefono_Principal}}"/>
+                </div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Extensión</label>
+                <div class="controls">
+                	<input type="text" class="input-mini" id="Extension" name="Extension" value="{{Dato.Extension}}"/>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Teléfono Celular</label>
+                <div class="controls">
+                	<input type="text" class="input-large" id="Telefono_Movil" name="Telefono_Movil" value="{{Dato.Telefono_Movil}}"/>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Teléfono Casa</label>
+                <div class="controls">
+                	<input type="text" class="input-large" id="Telefono_Casa" name="Telefono_Casa" value="{{Dato.Telefono_Casa}}"/>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Dirección</label>
+                <div class="controls">
+                	<textarea rows="3" id="Direccion" name="Direccion" placeholder="Dirección">{{Dato.Direccion}}</textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Observaciones</label>
+                <div class="controls">
+                	<textarea rows="3" id="Observaciones" name="Observaciones" placeholder="Observaciones">{{Dato.Observaciones}}</textarea>
+				</div>
+			</div>
+		</div>
+		
+	<div class="tab-pane" id="tab2">
+		<fieldset>
+	        	<legend class="text-info"><h4 style="padding-left: 25px;">DATOS USUARIOS</h4></legend>
+			</fieldset>
+			<br />
+			<div class="control-group">
+				<label class="control-label">Usuario</label>
+				<div class="controls">
+				
+                	<input type="text" class="input-medium" id="Usuario"  name="Usuario" value="{{Dato.Usuario}}" readonly=""/>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" >Contraseña</label>
+                <div class="controls">
+                	<input type="password" class="input-medium" id="Password" name="Password" value="" placeholder="*****"/>
+                </div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Repita Contraseña</label>
+                <div class="controls">
+                	<input type="password" class="input-medium" id="RePassword" name="RePassword" value="" placeholder="*****"/>
+                </div>
+			</div>
+			<fieldset>
+	        	<legend class="text-info"><h4 style="padding-left: 25px;">TIPO USUARIO</h4></legend>
+			</fieldset>
+			<div class="control-group">
+			    <label class="control-label">Perfil</label>
+			    <div class="controls">
+			    	<input type="text" id="Perfil" name="Perfil" value="{{Dato.Perfil}}" readonly=""/>
+				</div>  
+			</div>
+			<div class="control-group">
+			<label class="control-label">ACTIVO</label>
+				<div class="controls">
+					<input  type="text" id="Status" name="Status" value="ACTIVO" readonly=""/>	
+				</div>
+			</div>
+			{% endfor %}
+	</div>
+    </div>
+    </div>
+<br />
+<input  type="hidden" id="Validar" name="Validar"  value="{{Validar}}"/>
+<div class="control-group">
+				<div class="controls">
+                	<button type="submit" class="btn"><span class="icon-disk-2"></span > Actualizar</button>&nbsp;&nbsp;
+					<a class="btn btn-inverse" href="{{NeuralRutasApp.RutaURLBase}}Administrador"><span class="icon-cross"> Cancelar</span ></a>   
+    			</div>
+			</div>
+			<div id="alerts-container"></div>
+ 
+			<div id="toast-example1" class="toast toasttext02 fade">
+			   <button type="button" class="close" data-dismiss="alert"></button>
+			   <div class="toast-body">
+			      <h4 class="toast-heading">ERRROR</h4>
+			      <p>Faltan campos (*) requeridos para realizar el proceso de captura.</p>
+			   </div>
+			</div> 
+</form> 
+</div>
+<br /><br /><br />
+</div>
+<script src="{{NeuralRutasApp.RutaJs}}jquery.maskedinput.min.js" type="text/javascript"></script>
+{{Script|raw}}
+	
+<script>
+	function  CalculaPorcentajeModificacionPerfil() {
+		var TotalResgistro=0;	
+		if (jQuery('#Nombre').val() != ''){ TotalResgistro = TotalResgistro + 25;}
+		if (jQuery('#ApellidoPaterno').val() != ''){ TotalResgistro = TotalResgistro + 25;}
+		if (jQuery('#ApellidoMaterno').val() != ''){ TotalResgistro = TotalResgistro + 25;}
+		if (jQuery('#Usuario').val() != ''){ TotalResgistro = TotalResgistro + 25;}	
+		return TotalResgistro;		
+	}
+</script>
+<script>
+	function fnPaginaPrincipal() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/',
+			beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+			success: function(data) {
+				jQuery('#Contenido').html(data);			
+			}   
+		});
+	}
+</script>
+
+<script>
+	function fnModificarPerfil() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Perfil/GuardarModificacionPerfil',
+			data: jQuery('#Form').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+			success: function(data) {
+				jQuery('#Contenido').html(data);
+				ModificacionPerfil();			
+			}   
+		});
+	}
+</script>
+
+
+<script>
+	jQuery(document).ready(function(){
+		jQuery("Form").keypress(function(e) {
+	        if (e.which == 13) {
+	            return false;
+	        }
+    	});
+		jQuery('#Nombre').focus();
+		jQuery('#Telefono_Principal').mask("(999) 999-9999");
+		jQuery('#Telefono_Movil').mask("(999) 999-9999");
+		jQuery('#Telefono_Casa').mask("(999) 999-9999");		
+		jQuery('#Form').on('submit', function(e){
+			var isvalidate = jQuery('#Form').valid();
+			if (isvalidate) {
+				e.preventDefault();
+				var total = CalculaPorcentajeModificacionPerfil();
+				if (total == 100){
+					fnModificarPerfil();
+				}
+				else {
+					var $toast = $('#toast-example1').clone();
+					jQuery('#alerts-container').append($toast.addClass('in'));
+				}									
+			}
+			else {
+					var $toast = $('#toast-example1').clone();
+					jQuery('#alerts-container').append($toast.addClass('in'));
+				}
+								
+		});
+	});
+</script>

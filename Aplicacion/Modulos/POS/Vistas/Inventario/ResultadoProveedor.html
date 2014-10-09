@@ -1,0 +1,65 @@
+
+<table class="table table-condensed table-hover" id="Listado">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Nombre Comercial</th>
+			<th>Razon Social</th>
+			<th>Opción</th>
+			<th></th>
+		</tr>
+    </thead>
+    <tbody>
+    <form id="Resultado" name="Resultado" method="POST">
+		{% set Contador = 0 %}
+		{% for Dato in Consulta %}
+		{% set Contador = Contador + 1 %}
+		<tr class="center">
+			<td>{{Contador}}</td>
+			<td>{{Dato.Nombre_Comercial}}</td>
+			<td>{{Dato.Razon_Social}}</td>
+			<td class="center">
+			<ul class="unstyled">
+			    <li>
+   			 	<label class="radio">
+				   <input type="radio" name="OpcionRadio" id="OpcionRadio" value="{{Dato.Id}}" />
+   				<span class="metro-radio"></span>
+				</label>
+			    </li>
+			</ul>
+			</td>
+		</tr>
+		{% endfor %}
+	</form>
+    </tbody>
+</table>
+<div class="control-group">
+	<div class="controls">
+		<button class="btn btn-info" id="AgregarCodigoProveedor"><span class="icon-plus"></span > Agregar</button>
+    	&nbsp;&nbsp;
+		<button class="btn btn-inverse"  id="CancelarCodigo" class="btn"><span class=" icon-close"></span > Cancelar</button>   
+	</div>
+</div>
+<script>
+
+	jQuery('#AgregarCodigoProveedor').on('click', function() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/AgregarProveedorFormaResultado',
+			data: jQuery('#Resultado').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+				jQuery('#ContenidoModalProveedor').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');	
+			},
+			success: function(data) {
+				jQuery('#NombreProveedor').val('');
+				jQuery('#ContenidoModalProveedor').html('');
+				jQuery('#MBuscarProveedor').modal('hide');
+				jQuery.each(jQuery.parseJSON(data), function(Arreglo, Registro) {
+					jQuery('#Proveedor').val(Registro['Id']);
+	  				jQuery('#NombreProveedor').val(Registro['Nombre_Comercial']);
+	  				//jQuery('#Proveedor').html(data);
+				});
+			}	
+		});
+	});
+</script>

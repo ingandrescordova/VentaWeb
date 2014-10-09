@@ -1,0 +1,88 @@
+<header id="nav-bar" >
+	<div id="header-container">
+    	<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario"></a>
+        <h5>INVENTARIO</h5>
+        <h2>Importar</h2>    
+	</div>
+</header>
+<br />
+<div class="row-fluid">
+	<div class="span10 offset1">
+		<div class="tab-content">
+			<form class="form-horizontal" id="Form" name="Form" role="form" method="POST"> 
+			<div class="row-fluid">
+			        <ul class="nav nav-tabs">
+			            <li class="active"><a href="#tab1" data-toggle="tab"><span class="icon-user-3"></span > Importar Datos</a></li>
+			        </ul>
+			    <div class="tab-content">
+			        <div class="tab-pane active" id="tab1">
+				        <fieldset>
+				        	<legend class="text-info"><h4 style="padding-left: 25px;">IMPORTAR</h4></legend>
+						</fieldset>
+					<br />
+						<div class="control-group">
+							<label class="control-label" >Datos</label>
+			                <div class="controls">
+			                	<textarea  id="Datos" name="Datos" placeholder="Datos a Importar"></textarea>
+			                </div>
+						</div>
+					</div>
+			    </div>
+			</div><br />
+				<input  type="hidden" id="Validar" name="Validar"  value="{{Validar}}"/>
+				<div class="control-group">
+					<div class="controls">
+			        	<button type="submit" class="btn"><span class="icon-disk-2"></span > Importar</button>&nbsp;&nbsp;
+						<button onclick="javascript: frmInicializacionInventario();" class="btn btn-inverse" id="Cancelar"><span class="icon-cross"> Cancelar</span ></button>   
+			 		</div>
+				</div>
+				<div id="alerts-container"></div>
+			 	<div id="toast-example1" class="toast toasttext02 fade">
+					<button type="button" class="close" data-dismiss="alert"></button>
+						<div class="toast-body">
+							<h4 class="toast-heading">ERRROR</h4>
+							<p>Faltan campos (*) requeridos para realizar el proceso de captura.</p>
+						</div>
+				</div>	
+				<br /><br /><br /> 
+			</form>
+		</div>
+	</div> 
+</div>
+{{Script|raw}}
+<script>
+	function fnProcesarDatos() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/ProcesarDatos',
+			data: jQuery('#Form').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+				jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+			},
+			success: function(datos) {
+				jQuery('#Contenido').html(datos);
+			}
+		});
+	}
+</script>
+<script>
+	jQuery(document).ready(function(){
+		jQuery("Form").keypress(function(e) {
+	       	if (e.which == 13) {
+	           return false;
+	       	}
+   		});
+		jQuery('#Datos').focus();	
+		jQuery('#Form').on('submit', function(e){
+			var isvalidate = jQuery('#Form').valid();
+			if (isvalidate) {
+				e.preventDefault();	
+				fnProcesarDatos();								
+			}
+			else {
+				var $toast = $('#toast-example1').clone();
+					jQuery('#alerts-container').append($toast.addClass('in'));
+			}					
+		});
+	});
+</script>

@@ -1,0 +1,27 @@
+<br /><br />
+<header id="nav-bar" >
+</header>
+<div id="Contenido"></div>
+<div class="row">
+<div class="span1"></div>
+<br />
+</div>
+<div class="span1"></div>
+<script>
+/*--Función Que Muestra La Vista De Listado Del Inventario--*/
+ function frmListadoInventario() {
+ 	jQuery.ajax({
+    	url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/ListaInventario',
+        dateType: 'html',
+        beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+       	},
+        success: function(datos) {
+            jQuery('#Contenido').html(datos);
+        }
+    });
+ }
+</script>
+<script>
+   frmListadoInventario(); 
+</script> 

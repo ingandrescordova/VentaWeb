@@ -1,0 +1,102 @@
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+   <title>Login</title>
+   <!-- remove or comment this line if you want to use the local fonts -->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}bootmetro.css" />
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}bootmetro-responsive.css" />
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}bootmetro-icons.css" />
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}bootmetro-ui-light.css" />
+   <link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}datepicker.css" />
+   
+   <script src="{{NeuralRutasApp.RutaJs}}jquery-2.0.3.min.js"></script>  
+   <script src="{{NeuralRutasApp.RutaJs}}jquery-2.0.3.js"></script>
+   <script type="text/javascript" src="{{NeuralRutasApp.RutaJs}}min/bootstrap.min.js"></script>
+   <style>
+   	.error {
+  		font-size: 10px;
+   		color: #b41a0c;
+   }
+   .loginfooter {
+		  font-size: 11px; 
+		  position: absolute; position: fixed; bottom: 0; left: 0; color: #8e8e8e;
+		  width: 100%; text-align: center; font-family: arial, sans-serif !important; padding: 5px 0; 
+		  }
+   </style>
+</head>
+
+<body>
+<br />
+<br />
+
+<div class="container animated fadeInUp" id="Contenido">
+     <div class="row" >
+        <div class="span4"></div>
+        <div class="span4"></div>
+        <div class="span4"></div>
+    </div>
+    <br /><br /><br /><br /><br /><br /><br />
+    <div class="row">
+        <div class="span3"></div>
+        <div class="span5">
+        <ul class="nav nav-tabs">
+	     <li class="active">
+	       <a href="#">Autentificación</a>
+	     </li>
+	   </ul>
+	    <div class="tab-content">
+	       <div class="tab-pane active" id="tab1">
+	         <div class="well well-large">
+	    <form class="form-horizontal" id="Form" name="Form" method="POST" action="{{NeuralRutasApp.RutaURLBase}}POS/Index/Autenticacion">
+	      <div class="control-group">
+	         <label class="control-label" for="username">Usuario</label>
+	         <div class="controls">
+	            <input type="text" id="username" name="username" placeholder="Usuario"/>
+	         </div>
+	      </div>
+	      <div class="control-group">
+	         <label class="control-label" for="password">Contraseña</label>
+	         <div class="controls">
+	            <input type="password" id="password" name="password" placeholder="Contraseña"/>
+	         </div>
+	      </div>
+	      <div class="control-group">
+	         <div class="controls">
+	         	<input  id="Key" name="Key" value="{{Key}}" type="hidden"/>
+	            <button type="submit" class="btn btn-info">Entrar&nbsp;<span class="icon-arrow-right"></span></button>
+	         </div>
+	      </div>
+	   </form>
+	   </div>
+	       </div>
+	     </div>
+        
+        </div>
+        <div class="span4"></div>
+    </div>
+</div>
+ 
+<footer>
+	<div class="loginfooter">
+		<p>&copy; Kee Consulting. All Rights Reserved.</p>
+	</div>
+</footer>
+   
+</body>
+</html>
+ {{Script|raw}}
+<script>
+jQuery(document).ready(function() {
+	jQuery("Form").keypress(function(e) {
+	        if (e.which == 13) {
+	            return false;
+	        }
+    	});
+	jQuery('#username').focus();
+});
+</script>

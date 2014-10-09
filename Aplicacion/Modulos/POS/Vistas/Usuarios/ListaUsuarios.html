@@ -1,0 +1,128 @@
+<link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}dataTables.css" />
+<header id="nav-bar" > 
+	<div id="header-container">
+    	<a id="backbutton" class="win-backbutton"></a>
+        <h5>USUARIOS</h5>
+        <h2> Listado</h2>    
+	</div>
+</header>
+<div class="row-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<p class="lead">Listado de Usuarios</p>
+			<button class="win-command orange" onclick="javascript: frmAgregarUsuario()" rel="tootlip">
+				<span class="win-commandicon win-commandring icon-plus-5"></span>
+				<span class="win-label" >Agregar</span>
+			</button> 
+		</div>
+	</div>
+	<br />    
+         
+	<table class="table table-striped table-condensed table-hover well well-large" id="Listado">
+		<thead>
+			<tr>
+	  			<th>#</th>
+	     		<th>Nombre</th>
+		        <th>Apellido Paterno</th>
+		        <th>Apellido Materno</th>
+		        <th>Correo</th>
+		        <th>Username</th>
+		        <th></th>
+	      	</tr>
+		</thead>
+	 	<tbody>
+			{% set Contador = 0 %}
+			{% for Dato in Consulta %}
+			{% set Contador = Contador + 1 %}
+	      	<tr class="center">
+				<td>{{Contador}}</td>
+				<td>{{Dato.Nombre}}</td>
+				<td>{{Dato.ApellidoPaterno}}</td>
+				<td>{{Dato.ApellidoMaterno}}</td>
+				<td>{{Dato.Correo}}</td>
+				<td>{{Dato.Usuario}}</td>
+				<td >
+				<div class="text-center">
+					<ul class="unstyled">
+		   				<li>
+					    	<a onclick="javascript: frmEditarUsuario('{{Dato.Id|Encriptacion}}')" class="btn btn-info"><span class="icon-pencil"></span> </a>
+					        <a  onclick="javascript: frmEliminarUsuario('{{Dato.Usuario|Encriptacion}}')" class="btn btn-info"><span class="icon-cross-4"></span></a>
+					        <a  onclick="javascript: frmVisualizarUsuario('{{Dato.Id|Encriptacion}}')"class="btn btn-info"><span class="icon-search"></span ></a>
+					    </li>
+					</ul>
+				</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript"  src="{{NeuralRutasApp.RutaJs}}jquery.dataTables.min.js"> </script>
+<script type="text/javascript"  src="{{NeuralRutasApp.RutaJs}}jquery.dataTables.bootstrap.js"></script>
+{{Script|raw}}
+ <script>
+    function frmAgregarUsuario() {
+        /*-- Muestra La Vista De Agregar Usuario --*/
+        jQuery.ajax({
+           url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Usuarios/AgregarUsuario',
+           dataType: 'html',
+           beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+           success: function(datos) {
+            jQuery('#Contenido').html(datos); 
+           } 
+        });  
+    }
+</script>
+<script>
+	function frmEditarUsuario(Id) {
+		/*-- Muestra La Vista De Editar Usuario --*/
+    	jQuery.ajax({
+        	url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Usuarios/EditarUsuario/' + Id,
+           	dataType: 'html',
+           	beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+           	success: function(datos) {
+            	jQuery('#Contenido').html(datos);
+           	} 
+    	});  
+    }
+</script>
+<script>
+	function frmEliminarUsuario(Usuario) { 
+		/*-- Muestra La Vista De Eliminar Usuario --*/
+    	jQuery.ajax({
+        	url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Usuarios/EliminarUsuario/' + Usuario,
+           	dataType: 'html',
+           	beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+           	success: function(datos) {
+            	jQuery('#Contenido').html(datos);
+           } 
+        });  
+    }
+</script>
+<script>
+	function frmVisualizarUsuario(Id) {  
+		/*-- Muestra La Vista De Visualizar Usuario --*/
+		jQuery.ajax({
+        	url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Usuarios/VisualizarUsuario/' + Id,
+           	dataType: 'html',
+           	beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+           	success: function(datos) {
+            	jQuery('#Contenido').html(datos); 
+           	} 
+        });  
+	}
+</script>
+
+<script > 
+jQuery(document).ready(function(){
+    jQuery('#Listado').dataTable();
+});
+</script>

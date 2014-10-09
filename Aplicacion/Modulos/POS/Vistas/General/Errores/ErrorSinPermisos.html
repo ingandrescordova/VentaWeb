@@ -1,0 +1,20 @@
+{% extends "General/Errores/BaseError.html" %}
+
+{% block Contenido %}
+
+    <br />
+    <div class="page-header">
+		<br />
+		<h2 class="text-center">!ACCESO DENEGADO!</h2>
+	</div>
+	<div class="text-center animated tada"><img src="{{NeuralRutasApp.RutaImagenes}}lock.png" /></div>
+	<div class="control-group">
+		<div class="controls">
+			<div class="text-center">
+				<p class="lead" ><br/>Usuario sin autorización</p><br />
+				<div class="text-center"><a type="submit" class="btn btn-info" href="{{NeuralRutasApp.RutaURLBase}}Central"><span class="icon-reply"></span><span> Regresar</span></a></div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock Contenido %}

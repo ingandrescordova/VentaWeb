@@ -1,0 +1,50 @@
+<header id="nav-bar" >
+	<div id="header-container">
+		<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/ControlInventario"></a>
+        	<h5>CONTROL DE INVENTARIO <span class=" icon-arrow-right-2"></span></h5>
+        	<a class="header-dropdown dropdown-toggle accent-color"  href="#" ><h2>Visualizar Producto</h2></a>
+	</div>
+</header>
+<div class="row-fluid">
+	<div class="span10 offset1">
+		<div class="tab-content">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab1" data-toggle="tab"><span class="icon-signup"></span > Informacion Basica</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab1">
+						<fieldset>
+				    		<legend class="text-info"><h4 style="padding-left: 25px;">DATOS DEL PRODUCTO</h4></legend>
+				    	</fieldset>
+			        	<div id="pivot" class="pivot slide">
+			            	{% for Datos in Consulta%}
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Codigo</th>
+											<th>Nombre del Producto</th>
+											<th>Stock Minimo</th>
+											<th>Stock Máximo</th>
+											<th>Precio Venta</th>
+										</tr>
+									</thead>
+									<tr class="center">
+										<td>{{Contador}}</td>
+										<td>{{Datos.Codigo}}</td>
+										<td>{{Datos.NombreProducto}}</td>
+										<td>{{Datos.Stock_Minimo}}</td>
+										<td>{{Datos.Stock_Maximo}}</td>
+										<td>{{Datos.Precio_Venta}}</td>
+									</tr>
+								</table>
+							{% endfor %}
+							<br />
+			                <a class="btn btn-info" onclick="javascript: frmListadoInventario();"><span class="icon-back"> Regresar</span ></a>
+			                <br /><br /><br />
+			            </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,93 @@
+<link href="{{NeuralRutasApp.RutaCss}}bootstrap-editable.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="{{NeuralRutasApp.RutaCss}}dataTables.css" />
+<header id="nav-bar" >
+	<div id="header-container">
+    	<a id="backbutton" class="win-backbutton" href="{{NeuralRutaApp.Rutas}}"></a>
+        <h5>INVENTARIO</h5>
+        <h2> Listado</h2>    
+	</div>
+</header>
+
+<div class="row-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<p class="lead">Listado de Inventario</p>
+			<button class="win-command orange"  onclick="javascript: frmMostrarImportar()">
+         <span class="win-commandicon win-commandring icon-database"></span>
+         <span class="win-label"><h4 class="text-info">Importar</h4></span>
+         </button>
+		</div>
+	</div>
+	<br />
+	<div id="CambiarCantidad">
+	<table class="table table-striped table-condensed table-hover well well-large" id="Listado">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Codigo</th>
+				<th>Producto</th>
+				<th>Existencia</th>
+			</tr>
+	    </thead>
+	    <tbody>
+			{% set Contador = 0 %}
+			{% for Dato in Consulta %}
+			{% set Contador = Contador + 1 %}
+			<tr class="center">
+				<td>{{Contador}}</td>
+				<td>{{Dato.Codigo}}</td>
+				<td>{{Dato.NombreProducto}}</td>
+				<td><a onclick="javascript: MostrarCantidad()" data-pk="{{Dato.Id|Encriptacion}}" id="Cantidad">{{Dato.Existencia}}</a></td>
+				<div class="text-center">
+					<ul class="unstyled">
+					    <li>
+					    </li>
+					</ul>
+				</div>
+			</tr>
+			{% endfor %}
+	    </tbody>
+</table>
+</div> 
+</div>
+<br /><br /><br />
+{{Script|raw}}
+<script type="text/javascript" src="{{NeuralRutasApp.RutaJs}}bootstrap-editable.js"></script>
+<script type="text/javascript"  src="{{NeuralRutasApp.RutaJs}}jquery.dataTables.min.js"> </script>
+<script type="text/javascript"  src="{{NeuralRutasApp.RutaJs}}jquery.dataTables.bootstrap.js"></script>
+
+<script>
+//turn to inline mode
+jQuery.fn.editable.defaults.mode = 'popup';
+</script>
+<script>
+	function MostrarCantidad() {
+		jQuery('#CambiarCantidad').editable({
+			selector: 'a',
+	    	type: 'text',
+		   	url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/CantidadListadoInventario',
+		    title: 'Ingrese La Cantidad',
+		    emptytext: '0' 
+    	});
+    	
+	}
+</script>
+<script > 
+jQuery(document).ready(function(){
+    jQuery('#Listado').dataTable();
+});
+</script>
+<script>
+	function frmMostrarImportar() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/frmImportar',
+			dataType: 'html',
+			beforeSend: function() {
+				jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+			},
+			success: function(datos) {
+				jQuery('#Contenido').html(datos);
+			}
+		});
+	}
+</script>

@@ -1,0 +1,39 @@
+<br /><br />
+<header id="nav-bar" >
+	<div id="header-container" class="pull-right" >
+         <button class="win-command orange"  onclick="frmAgregarEmpresa()">
+         <span class="win-commandicon win-commandring icon-redo-2"></span>
+         <span><h2>Datos Empresa</h2></span>
+         </button>
+    </div>
+</header>
+<div id="Contenido"></div>
+<div class="row">
+<div class="span1"></div>
+<div class="text-center">
+<ul class="thumbnails">
+     <li class="span4">
+       <div class="thumbnail">
+         <img src="{{NeuralRutasApp.RutaImagenes}}Empresa.png" alt=""/>
+         <h3>DATOS EMPRESA</h3>
+       </div>
+     </li>
+</ul>
+</div>
+</div>
+<div class="span1"></div>
+<script>
+	/*--Muestra La Vista De Agregar Empresa--*/
+	function frmAgregarEmpresa() {
+		jQuery.ajax({
+        	url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Empresa/frmAgregarEmpresa',
+        	dateType: 'html',
+        	beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+        	success: function(datos) {
+            	jQuery('#Contenido').html(datos);
+        	}
+    	});
+ 	}
+</script>

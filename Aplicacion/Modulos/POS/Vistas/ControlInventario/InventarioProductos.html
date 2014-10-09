@@ -1,0 +1,26 @@
+<div class="row">
+	<div class="span9">
+		<div id="Contenido">
+		</div>
+	</div>
+</div>
+<div class="span1"></div>
+<script>
+/*--Función Que Muestra La Vista De Listado De Inventario--*/
+ function frmListadoInventario() {
+ 	jQuery.ajax({
+    	url: '{{NeuralRutasApp.RutaURLBase}}Administrador/ControlInventario/ListaInventario',
+        dateType: 'html',
+        beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+       	},
+        success: function(datos) {
+            jQuery('#Contenido').html(datos);
+        }
+    });
+ }
+</script>
+<script>
+   frmListadoInventario(); 
+</script>
+ 

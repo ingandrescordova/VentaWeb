@@ -1,0 +1,51 @@
+<header id="nav-bar" >
+	<div id="header-container">
+ 		<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/Usuarios"></a>
+        <h5>USUARIOS<span class=" icon-arrow-right-2"></span></h5>
+        <a class="header-dropdown dropdown-toggle accent-color"  href="#" >
+        	<h2>Visualizar</h2>
+        </a>
+	</div>
+</header>
+<div class="row-fluid">
+	<div class="span10 offset1">
+		<div class="tab-content">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab1" data-toggle="tab"><span class="icon-pencil"></span >Informacion Basica</a></li>
+			</ul>
+			<div class="tab-content">
+			    <div class="tab-pane active" id="tab1">
+			    	<fieldset>
+			    		<legend class="text-info"><h4 style="padding-left: 25px;">DATOS USUARIO</h4></legend>
+			    	</fieldset>
+						<div id="pivot" class="pivot slide">
+			        		<table class="table table-hover">
+			        		{% for Dato in Consulta%}
+								<thead>
+									<tr>
+										<th>Nombre Completo</th>
+										<th>Correo</th>
+										<th>Telefono</th>
+										<th>Perfil</th>
+										<th></th>
+									</tr>
+								</thead>
+									<tr class="center">
+										<td>{{Dato.Nombre}}&nbsp;{{Dato.ApellidoPaterno}}&nbsp;{{Dato.ApellidoMaterno}}</td>
+										<td>{{Dato.Correo}}</td>
+										<td>{{Dato.Telefono_Principal}}</td>
+										<td>{{Dato.Perfil}}</td>
+										<td >
+										</td>
+									</tr>
+							{% endfor %}
+							</table>
+							<br />
+			            <a class="btn btn-info" onclick="javascript: frmListadoUsuarios()"><span class="icon-back"> Regresar</span ></a>
+			            <br /><br /><br />
+			        </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

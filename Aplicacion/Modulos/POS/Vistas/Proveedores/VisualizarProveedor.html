@@ -1,0 +1,85 @@
+<header id="nav-bar">
+	<div id="header-container">
+    	<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/Proveedores"></a>
+        <h5>PROVEEDORES <span class=" icon-arrow-right-2"></span></h5>
+        <a class="header-dropdown dropdown-toggle accent-color"  href="#" >
+        	<h2>Visualizar</h2>
+        </a>
+	</div>
+</header>
+<div class="row-fluid">
+	<div class="span10 offset1">
+		<div class="tab-content">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab1" data-toggle="tab"><span class="icon-user-3"></span > Informacion Basica</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab1">
+					<fieldset>
+			    		<legend class="text-info"><h4 style="padding-left: 25px;">DATOS PROVEEDOR</h4></legend>
+			    	</fieldset>
+					<table class="table table-condensed table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>RFC</th>
+						<th>Nombre Comercial</th>
+						<th>Nombre Razon_Social</th>
+						<th>Telefono Proveedor</th>
+						<th>URL</th>
+						<th>Status</th>
+					</tr>
+			    </thead>
+			    <tbody>
+					{% set Contador = 0 %}
+					{% for Dato in Consulta %}
+					{% set Contador = Contador + 1 %}
+					<tr class="center">
+						<td>{{Contador}}</td>
+						<td>{{Dato.RFC}}</td>
+						<td>{{Dato.Nombre_Comercial}}</td>
+						<td>{{Dato.Razon_Social}}</td>
+						<td>{{Dato.Telefono_Proveedor}}</td>
+						<td>{{Dato.URL}}</td>
+						<td>{{Dato.Status}}</td>
+					</tr>
+			    </tbody>
+			</table>
+			</div>
+			<br />
+				<div class="tab-pane active" id="tab1">
+					<fieldset>
+			    		<legend class="text-info"><h4 style="padding-left: 25px;">DATOS CONTACTO REPRESENTANTE</h4></legend>
+			    	</fieldset>
+					<table class="table table-condensed table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Nombre</th>
+						<th>Cargo</th>
+						<th>Telefono Principal</th>
+						<th>Telefono Movil</th>
+						<th>Correo</th>
+					</tr>
+			    </thead>
+			    <tbody>
+					{% set Contador2 = Contador2 + 1 %}
+					<tr class="center">
+						<td>{{Contador2}}</td>
+						<td>{{Dato.Nombre}}</td>
+						<td>{{Dato.Cargo}}</td>
+						<td>{{Dato.Telefono_Representante}}</td>
+						<td>{{Dato.Movil_Representante}}</td>
+						<td>{{Dato.Correo}}</td>
+					</tr>
+					{% endfor %}
+			    </tbody>
+			</table>
+			</div>	
+			</div>
+			<br /><br />
+				<button class="btn btn-info" onclick="javascript: frmListadoProveedores()"><span class=" icon-back"> Regresar</span ></button>   
+			<br /><br /><br />
+		</div> 
+	</div>
+</div>

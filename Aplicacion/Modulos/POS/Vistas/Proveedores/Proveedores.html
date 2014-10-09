@@ -1,0 +1,95 @@
+<div class="row">
+	<div class="span9">
+	    <div id="Contenido"></div>
+    </div>
+</div>
+<div class="span1"></div>
+
+<script>
+	/*--Muestra La Vista De Listado De Proveedores--*/
+	function frmListadoProveedores() {
+		jQuery.ajax({
+        	url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Proveedores/ListaProveedores',
+        	dateType: 'html',
+        	beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+        	success: function(datos) {
+            	jQuery('#Contenido').html(datos);
+        	}
+    	});
+ 	}
+</script>
+ 
+<script>
+	/*--Muestra La Vista De Listado De Proveedores--*/
+	frmListadoProveedores(); 
+</script> 
+<script>
+	/*--Vista Agregar Usuario--*/
+	function frmAgregarProveedor() {    
+		jQuery.ajax({
+        	url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Proveedores/AgregarProveedor',
+           	dataType: 'html',
+           	beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+           	success: function(datos) {
+            	jQuery('#Contenido').html(datos);
+           	} 
+ 		});  
+    }
+</script>
+
+ <script>
+ 	/*--Vista Editar Usuario--*/
+    function frmEditarProveedor() {
+        jQuery.ajax({
+           url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Proveedores/EditarProveedor',
+           dataType: 'html',
+           beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+           success: function(datos) {
+            	jQuery('#Contenido').html(datos);
+           } 
+        });  
+    }
+</script>
+<script>
+	/*--Vista Eliminar Usuario--*/
+    function frmEliminarProveedor() {
+        jQuery.ajax({
+           url: 'EliminarProveedor',
+           dataType: 'html',
+           beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+           success: function(datos) {
+            jQuery('#Contenido').html(datos);
+            
+           } 
+        });  
+    }
+</script>
+<script>
+	/*--Vista Visualizar Usuario--*/
+    function frmVisualizarProveedor() {
+        jQuery.ajax({
+           url: '{{NeuralRutasApp.RutaURL}}Pos/VisualizarProveedor',
+           dataType: 'html',
+           beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+           success: function(datos) {
+       	    jQuery('#Contenido').html(datos);
+            
+           } 
+        });  
+    }
+</script>
+
+
+ 
+
+  

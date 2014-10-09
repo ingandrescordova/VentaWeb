@@ -1,0 +1,116 @@
+<header id="nav-bar" >
+	<div id="header-container">
+		<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador"></a>
+ 	    <h5>INVENTARIO <span class=" icon-arrow-right-2"></span></h5>
+        <h2>Movimientos</h2>
+	</div>
+</header>
+<div class="space"></div>
+<div class="space"></div>
+<br />
+<div class="row-fluid">
+	<div class="span10 offset1">
+		<div class="tab-content">
+			<form class="form-horizontal" id="Form" name="Form" role="form" method="POST"> 
+				<div class="row-fluid">
+					
+					<ul class="nav nav-tabs">
+	    				<li class="active"><a href="#tab1" data-toggle="tab"><span class="icon-signup"></span > Información Basica</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab1">
+							<fieldset>
+						      <legend class="text-info"><h4 style="padding-left: 25px;">MOVIMIENTO</h4></legend>
+							</fieldset>
+							<div class="control-group">
+								<label class="control-label" >Movimiento</label>
+					           <div class="controls">
+						         <input type="text"  class="input-large" id="Movimiento" name="Movimiento" placeholder="Movimiento" value="Entrada" readonly=""/>
+					           </div>
+							</div>
+						<div class="control-group">
+							<label class="control-label">Tipo de Movimiento</label>
+							<div class="controls">
+								<select name="Tipo_Movimiento" id="Tipo_Movimiento">
+								<option value="0">Seleccione una opcion</option>
+								<option value="Proveedor">Proveedor</option>
+								<option value="Donacion">Donación</option>
+								<option value="Devolucion">Devolución</option>
+								</select>
+			    			</div>
+						</div>
+						</div>
+					</div>
+					
+				</div>
+				<br />
+				<input  type="hidden" id="Validar" name="Validar"  value="{{Validar}}"/>
+				<div class="control-group">
+					<div class="controls">
+                		<button type="submit" class="btn"><span class="icon-disk-2"></span>&nbsp;Aceptar</button>
+                		&nbsp;&nbsp;
+						<button class="btn btn-inverse" onclick="" class="btn"><span class="icon-close"></span>&nbsp;Cancelar</button>	   
+    				</div>
+				</div>
+				<div id="alerts-container"></div>
+ 
+				<div id="toast-example1" class="toast toasttext02 fade">
+				   <button type="button" class="close" data-dismiss="alert"></button>
+				   <div class="toast-body">
+				      <h4 class="toast-heading">ERRROR</h4>
+				      <p>Faltan campos (*) requeridos para realizar el proceso de captura.</p>
+				   </div>
+				</div>
+ 
+				<br /><br /><br /> 
+			</form> 
+		</div>
+	</div>
+</div> 
+	<footer class="win-ui-light win-commandlayout navbar-fixed-bottom">  
+	</footer>
+	  
+{{Script|raw}} 
+<script>
+/*--Función Que Manda Al Metodo Para GuardarProducto--*/
+	function fnMostrarPantallaMovimiento() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Inventario/OpcionesMovimientos',
+			data: jQuery('#Form').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+			success: function(data) {
+				jQuery('#Contenido').html(data);	
+			}   
+		});
+	}
+</script>
+<script>
+/*--Función Que Se Realiza Con El Evento Submit Y Llama A La Funcion GuardarProducto Y frmListadoProductos--*/
+	jQuery(document).ready(function(){
+		jQuery("Form").keypress(function(e) {
+	       	if (e.which == 13) {
+	           return false;
+	       	}
+   		});
+		jQuery('#Form').on('submit', function(e){
+			var isvalidate = jQuery('#Form').valid();
+			if (isvalidate) {
+				e.preventDefault();
+				fnMostrarPantallaMovimiento();
+			}
+			else {
+				var $toast = $('#toast-example1').clone();
+				jQuery('#alerts-container').append($toast.addClass('in'));
+			}					
+		});
+		$('#show-toast-button').click(function(e){
+		   e.preventDefault();
+		   var $toast = $( $(this).attr('href')).clone();
+		   $('#alerts-container').append($toast.addClass('in'));
+		});
+	});
+</script>
+ 

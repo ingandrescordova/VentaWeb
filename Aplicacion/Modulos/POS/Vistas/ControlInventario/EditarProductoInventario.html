@@ -1,0 +1,147 @@
+<header id="nav-bar">
+	<div id="header-container">
+		<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/ControlInventario"></a>
+        	<h5>CONTROL DE INVENTARIO <span class=" icon-arrow-right-2"></span></h5>
+            <h2>Editar producto de inventario</h2> 
+	</div>
+</header>
+<div id="ContenidoPrueba"></div>
+<div class="row-fluid">
+	<div class="span10 offset1">
+		<div class="tab-content">
+			<form class="form-horizontal" id="Form" name="Form" role="form" method="POST"> 
+				<div class="row-fluid">
+					
+        				<ul class="nav nav-tabs">
+            				<li class="active"><a href="#tab1" data-toggle="tab"><span class="icon-signup"></span > Información Basica</a></li>
+        				</ul>
+    					<div class="tab-content">
+        					<div class="tab-pane active" id="tab1">
+								<fieldset>
+	        						<legend class="text-info"><h4 style="padding-left: 25px;">PRODUCTO</h4></legend>
+								</fieldset>
+								<input id="Id" name="Id" value="{{Id}}" type="hidden"/>
+								{% for Dato in Consulta %}
+								<div class="control-group">
+									<label class="control-label" >Codigo</label>
+	                				<div class="controls">
+	                					<input type="text"  class="input-large" id="Codigo" name="Codigo" placeholder="Codigo Producto" readonly="" value="{{Dato.Codigo}}"/>
+	                				</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Nombre Del Producto</label>
+                					<div class="controls">
+					                	<input type="text" class="input-large" id="NombreProducto" name="NombreProducto" placeholder="Descripción" readonly="" value="{{Dato.NombreProducto}}"/>
+                					</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Stock Mínimo</label>
+                					<div class="controls">
+					                	<input type="text" class="input-small" id="Stock_Minimo" name="Stock_Minimo" value="{{Dato.Stock_Minimo}}" placeholder="Stock"/>
+                					</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Stock Máximo</label>
+                					<div class="controls">
+					                	<input type="text" class="input-small" id="Stock_Maximo" name="Stock_Maximo" value="{{Dato.Stock_Maximo}}" placeholder="Stock"/>
+                					</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Precio de venta</label>
+                					<div class="controls">
+                						<div class="input-prepend input-append">
+                							<span class="add-on">$</span>
+					                		<input type="text" class="input-small" id="Precio_Venta" name="Precio_Venta" value="{{Dato.Precio_Venta}}" placeholder="Precio"/>
+					                	</div>
+                					</div>
+								</div>
+									<div class="control-group">
+								{% if Dato.Status == 'ACTIVO'%}
+									<label class="control-label">ACTIVO</label>
+										<div class="controls">	
+											<label class="checkbox">
+									            <input type="checkbox" id="Status" name="Status" checked="true" /><span class="metro-checkbox"></span>
+									         </label>
+									   </div>
+								{% endif%}
+								{% if Dato.Status == 'INACTIVO'%}
+									<label class="control-label">ACTIVO</label>
+										<div class="controls">
+									   	<label class="checkbox">
+								            <input type="checkbox" id="Status" name="Status"/><span class="metro-checkbox"></span>
+								         </label>
+									   </div>
+								{% endif%}
+								</div>
+								{% endfor %}
+							</div>
+    					</div>
+					
+				</div>
+				<br />
+				<input  type="hidden" id="Validar" name="Validar"  value="{{Validar}}"/>
+				<div class="control-group">
+					<div class="controls">
+                		<button class="btn btn-primary" type="submit"><span class="icon-disk-2"></span> Guardar</button>
+                		&nbsp;&nbsp;
+						<button class="btn btn-inverse" class="btn" onclick="javascript: frmListadoInventario()"><span class=" icon-close"></span > Cancelar</button>   
+    			</div>
+    			<br /><br /><br />
+			</div> 
+			<div id="alerts-container"></div>
+ 
+			<div id="toast-example1" class="toast toasttext02 fade">
+			   <button type="button" class="close" data-dismiss="alert"></button>
+			   <div class="toast-body">
+			      <h4 class="toast-heading">ERRROR</h4>
+			      <p>Faltan campos (*) requeridos para realizar el proceso de captura.</p>
+			   </div>
+			</div>
+			</form> 
+		</div>
+	</div>
+</div> 
+	<footer class="win-ui-light win-commandlayout navbar-fixed-bottom">  
+	</footer>
+{{Script|raw}}
+<script>
+	
+	/*--Función Que Guarda Datos A Editar--*/
+	function fnEditarProductoInventario() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/ControlInventario/EditarProducto',
+			data: jQuery('#Form').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+			success: function(data) {
+				jQuery('#Contenido').html(data);
+				frmListadoInventario();	
+			}   
+		});
+	}
+	
+</script>
+
+<script>
+	jQuery(document).ready(function() {
+		jQuery("Form").keypress(function(e) {
+	        if (e.which == 13) {
+	            return false;
+	        }
+    	});
+		jQuery('#Stock_Minimo').focus();
+		jQuery('#Form').on('submit', function(e) {
+			var isvalidate = jQuery('#Form').valid();
+			if (isvalidate) {
+				e.preventDefault();
+				fnEditarProductoInventario();
+			}
+			else {
+				var $toast = $('#toast-example1').clone();
+				jQuery('#alerts-container').append($toast.addClass('in'));
+			}
+		});
+	});
+</script>

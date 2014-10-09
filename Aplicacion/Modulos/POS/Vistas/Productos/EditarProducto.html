@@ -1,0 +1,134 @@
+<header id="nav-bar" >
+	<div id="header-container">
+		<a id="backbutton" class="win-backbutton" href="{{NeuralRutasApp.RutaURLBase}}Administrador/Productos"></a>
+		<h5>PRODUCTOS <span class=" icon-arrow-right-2"></span></h5>
+        <a class="header-dropdown dropdown-toggle accent-color"  href="#" >
+           	<h2>Editar Producto</h2>
+        </a>
+	</div>
+</header>
+<div class="row-fluid">
+<div class="alert alert-block">
+	<button type="button" class="close" data-dismiss="alert"></button>
+  	<h4>Precaución!</h4>
+  	Este registro puede ser modificado.
+</div>
+<div class="alert alert-error" hidden="true" id="AlertaStatus">
+  <button type="button" class="close" data-dismiss="alert"></button>
+  <h4>Error de Captura:</h4><br /> 
+  Faltan campos (*) requeridos para realizar el proceso de captura.
+</div>
+
+	<div class="span10 offset1">
+		<div class="tab-content">
+		{% for Datos in Consulta %}
+			<form class="form-horizontal" id="Form" name="Form" role="form" method="POST"> 
+				<div class="row-fluid">
+					
+        				<ul class="nav nav-tabs">
+            				<li class="active"><a href="#tab1" data-toggle="tab"><span class="icon-signup"></span > Información Basica</a></li>
+        				</ul>
+    					<div class="tab-content">
+        					<div class="tab-pane active" id="tab1">
+								<fieldset>
+	        						<legend class="text-info"><h4 style="padding-left: 25px;">PRODUCTO</h4></legend>
+								</fieldset>
+								<div class="control-group">
+									<label class="control-label" >Codigo</label>
+	                				<div class="controls">
+	                					<input  type="hidden" id="Id" name="Id" value="{{Datos.Id|Encriptacion}}"/>
+	                					<input type="text"  class="input-large" id="Codigo" name="Codigo" value="{{Datos.Codigo}}" placeholder="Codigo Producto"/>
+	                				</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">Nombre Del Producto</label>
+                					<div class="controls">
+					                	<input type="text"  class="input-large"  id="NombreProducto" name="NombreProducto" value="{{Datos.NombreProducto}}" placeholder="Descripción"/>
+                					</div>
+								</div>
+								<div class="control-group">
+								{% if Datos.Status == 'ACTIVO'%}
+									<label class="control-label">ACTIVO</label>
+										<div class="controls">	
+											<label class="checkbox">
+									            <input type="checkbox" id="Status" name="Status" checked="true" /><span class="metro-checkbox"></span>
+									         </label>
+									   </div>
+								{% endif%}
+								{% if Datos.Status == 'INACTIVO'%}
+									<label class="control-label">ACTIVO</label>
+										<div class="controls">
+									   	<label class="checkbox">
+								            <input type="checkbox" id="Status" name="Status"/><span class="metro-checkbox"></span>
+								         </label>
+									   </div>
+								{% endif%}
+								</div>
+							</div>
+    					</div>
+					
+				</div>
+				<br />
+				<input  type="hidden" id="Validar" name="Validar"  value="{{Validar}}"/>
+				<div class="control-group">
+					<div class="controls">
+                		<button type="submit" class="btn"><span class="icon-disk-2"></span>&nbsp;Modificar</button>
+                		&nbsp;&nbsp;
+						<button class="btn btn-inverse" onclick="javascript: frmListadoProducto()" class="btn"><span class=" icon-close"></span>&nbsp;Cancelar</button>   
+    			</div>
+			</div>
+			<div id="alerts-container"></div>
+ 
+			<div id="toast-example1" class="toast toasttext02 fade">
+			   <button type="button" class="close" data-dismiss="alert"></button>
+			   <div class="toast-body">
+			      <h4 class="toast-heading">ERRROR</h4>
+			      <p>Faltan campos (*) requeridos para realizar el proceso de captura.</p>
+			   </div>
+			</div>
+			<br /><br /><br />
+			</form>
+		{% endfor %} 
+		</div>
+	</div>
+</div>
+<br /><br /><br /><br />
+{{Script|raw}} 
+<script>
+/*--Función Que Manda Al Metodo Para Editar El Producto--*/
+	function fnEditarProducto() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/Productos/GuardarEditarProducto',
+			data: jQuery('#Form').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+        		jQuery('#Contenido').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');
+        	},
+			success: function(data) {
+				jQuery('#Contenido').html(data);
+			}   
+		});
+	}
+</script>
+<script>
+/*--Función Que Se Realiza Con El Evento Submit Y Valida Si La Opcion Select Fue Selecciona Si No Manda Una Alarma--*/
+	jQuery(document).ready(function(){
+		 jQuery("Form").keypress(function(e) {
+	        if (e.which == 13) {
+	            return false;
+	        }
+    	});
+		jQuery('#Codigo').focus();
+		jQuery('#Form').on('submit', function(e){
+			var isvalidate = jQuery('#Form').valid();
+			if (isvalidate) {
+				e.preventDefault();
+				fnEditarProducto();				
+			}
+			else {
+				var $toast = $('#toast-example1').clone();
+				jQuery('#alerts-container').append($toast.addClass('in'));
+			}					
+		});
+	});
+</script> 

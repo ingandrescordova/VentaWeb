@@ -1,0 +1,65 @@
+
+<table class="table table-condensed table-hover" id="Listado">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Codigo</th>
+			<th>Nombre del Producto</th>
+			<th>Opción</th>
+			<th></th>
+		</tr>
+    </thead>
+    <tbody>n
+    <form id="ResultadoDescripcion" name="ResultadoDescripcion" method="POST">
+		{% set Contador = 0 %}
+		{% for Dato in Consulta %}
+		{% set Contador = Contador + 1 %}
+		<tr class="center">
+			<td>{{Contador}}</td>
+			<td>{{Dato.Codigo}}</td>
+			<td>{{Dato.NombreProducto}}</td>
+			<td class="center">
+			<ul class="unstyled">
+			    <li>
+   			 	<label class="radio">
+				   <input type="radio" name="OpcionRadio" id="OpcionRadio" value="{{Dato.Id|Encriptacion}}" />
+   				<span class="metro-radio"></span>
+				</label>
+			    </li>
+			</ul>
+			</td>
+		</tr>
+		{% endfor %}
+	</form>
+    </tbody>
+</table>
+<div class="control-group">
+	<div class="controls">
+		<button class="btn btn-info" id="AgregarDescripcion"><span class="icon-plus"></span > Agregar</button>
+    	&nbsp;&nbsp;
+		<button class="btn btn-inverse"  id="CancelarCodigo" class="btn"><span class=" icon-close"></span > Cancelar</button>   
+	</div>
+</div>
+<script>
+
+	jQuery('#AgregarDescripcion').on('click', function() {
+		jQuery.ajax({
+			url: '{{NeuralRutasApp.RutaURLBase}}Administrador/ControlInventario/AgregarProductoFormaResultado',
+			data: jQuery('#ResultadoDescripcion').serialize(),
+			type: 'POST',
+			beforeSend: function() {
+				jQuery('#ContenidoModal2').html('<br /><br /><br /><br /><span><img src="{{NeuralRutasApp.RutaImagenes}}loader.gif" /> Procesando, Espere por favor ...</span>');	
+			},
+			success: function(data) {
+				jQuery('#DescripcionM').val('');
+				jQuery('#ContenidoModal2').html('');
+				jQuery('#ModalDescripcion').modal('hide');
+				jQuery.each(jQuery.parseJSON(data), function(Arreglo, Registro) {
+					jQuery('#Producto').val(Registro['Id']);
+	  				jQuery('#Codigo').val(Registro['Codigo']);
+	  				jQuery('#NombreProducto').val(Registro['NombreProducto']);
+				});
+			}	
+		});
+	});
+</script>
